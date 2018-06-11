@@ -1,16 +1,5 @@
-/**
- * 
- *  THIS IS SINGLE FILE
- *  MAIN FUNCTION INCLUDED
- * 
- *  JUST COMPILE THIS
- * 
- * */
-
-
 #include <stdio.h>
 #include <stdlib.h>
-
 
 
 struct node {
@@ -18,13 +7,12 @@ struct node {
     struct node *link;
 };
 
-typedef struct node node;
+
+typedef struct node Node;
 
 
-
-void display(node *root) {
-
-    node *temp = root;
+void display(Node *root) {
+    Node *temp = root;
 
     if (temp == NULL) {
         printf("List is empty\n");
@@ -33,8 +21,8 @@ void display(node *root) {
         printf("List elements: ");
 
         while (temp != NULL) {                                  /* not yet at the end */
-            printf("%d", temp->data);                           /* current node's data */
-            temp = temp->link;                                  /* next node */
+            printf("%d", temp->data);                           /* current Node's data */
+            temp = temp->link;                                  /* next Node */
             
             if (temp != NULL) printf(" -> ");                   /* just to look nicer */
         }
@@ -45,10 +33,8 @@ void display(node *root) {
 }
 
 
-
-int length(node *root) {
-
-    node *temp = root;
+int length(Node *root) {
+    Node *temp = root;
     int count = 0;
 
     while (temp != NULL) {
@@ -60,29 +46,26 @@ int length(node *root) {
 }
 
 
-
-node *findNode(node *root, int finddata) {                      /* return pointer to node */
-
-    node *temp = root;
+Node *findNode(Node *root, int finddata) {                      /* return pointer to Node */
+    Node *temp = root;
 
     while (temp != NULL) {                                      /* not yet at the end */
-        if (temp->data == finddata) {                           /* node's data is equal to searched data */
+        if (temp->data == finddata) {                           /* Node's data is equal to searched data */
             return temp;
         }
-        temp = temp->link;                                      /* next node */
+        temp = temp->link;                                      /* next Node */
     }
     
     return NULL;
 }
 
 
-
-void addNode(node **rootp, int newdata) {
+void addNode(Node **rootp, int newdata) {
     /* double pointer because element can be added in front of all the others */
     /* in that case pointer to root must be changed to that new element */
-    node *temp;
+    Node *temp;
 
-    temp = (node *)malloc(sizeof(node));
+    temp = (Node *)malloc(sizeof(Node));
     temp->data = newdata;
     temp->link = NULL;
 
@@ -91,10 +74,10 @@ void addNode(node **rootp, int newdata) {
         *rootp = temp;                                          /* temp is now root element */
     }
     else {                                                      /* not adding at the beginning */
-        node *p = *rootp;
+        Node *p = *rootp;
 
         while (p->link != NULL && (p->link)->data < newdata) {
-            p = p->link;                                        /* point p to next node, p is iterator */
+            p = p->link;                                        /* point p to next Node, p is iterator */
         }
 
         /* result: new element (temp) is added in the middle */
@@ -105,16 +88,14 @@ void addNode(node **rootp, int newdata) {
 }
 
 
-
-void appendNode(node **rootp, int newdata) {
+void appendNode(Node **rootp, int newdata) {
     /**
      *  WARNING    
      * This kills sorting logic, added element will not be sorted anymore
      * */
-
-    node *temp;
+    Node *temp;
     
-    temp = (node *)malloc(sizeof(node));
+    temp = (Node *)malloc(sizeof(Node));
     temp->data = newdata;
     temp->link = NULL;
 
@@ -122,7 +103,7 @@ void appendNode(node **rootp, int newdata) {
         *rootp = temp;
     }
     else {
-        node *p = *rootp;
+        Node *p = *rootp;
 
         while (p->link != NULL) {
             p = p->link;
@@ -134,8 +115,7 @@ void appendNode(node **rootp, int newdata) {
 }
 
 
-
-void deleteNode(node **rootp, int deldata) {
+void deleteNode(Node **rootp, int deldata) {
     /* double pointer because the first element can be deleted */
     /* in that case pointer to root must be changed to that new element (second element) */
     while (*rootp != NULL && (*rootp)->data != deldata) {
@@ -150,7 +130,6 @@ void deleteNode(node **rootp, int deldata) {
 }
 
 
-
 void swapNodes(void) {
     /**
      *  WARNING
@@ -160,13 +139,11 @@ void swapNodes(void) {
 }
 
 
-
-void copyList(node *root1, node **root2) {
+void copyList(Node *root1, Node **root2) {
     /* pointer to pointer so root2 can be changed from NULL */
-
     while (root1 != NULL) {
 
-        *root2 = (node *)malloc(sizeof(node));
+        *root2 = (Node *)malloc(sizeof(Node));
 
         (*root2)->data = root1->data;
         (*root2)->link = NULL;
@@ -178,12 +155,11 @@ void copyList(node *root1, node **root2) {
 }
 
 
-
-void mergeLists(node **root1, node *root2) {
+void mergeLists(Node **root1, Node *root2) {
     /* double pointer in case root1 is null and must be changed */
     /* merge and preserve sorting */
 
-    /* iterate through second node */
+    /* iterate through second Node */
     while (root2 != NULL) {
         addNode(root1, root2->data);
         root2 = root2->link;
@@ -191,8 +167,7 @@ void mergeLists(node **root1, node *root2) {
 }
 
 
-
-void appendList(node *root1, node **root2) {
+void appendList(Node *root1, Node **root2) {
     /**
      *  WARNING
      * This kills sorting logic
@@ -205,7 +180,7 @@ void appendList(node *root1, node **root2) {
     /* destination not null, find the end */
     else {
 
-        node *p = *root2;
+        Node *p = *root2;
 
         while (p->link != NULL) {
             p = p->link;
@@ -217,27 +192,23 @@ void appendList(node *root1, node **root2) {
 }
 
 
-
-void deleteList(node **rootp) {
-
-    node *temp;
+void deleteList(Node **rootp) {
+    Node *temp;
 
     while (*rootp != NULL) {
         temp = *rootp;                                          /* save current root */
         *rootp = (*rootp)->link;                                /* change root to next element */
-        free(temp);                                             /* free that node */
+        free(temp);                                             /* free that Node */
     }
 
     *rootp = NULL;                                              /* root is now null */
 }
 
 
-
 int main(void) {
-
-    node *root  = NULL;
-    node *root2 = NULL;
-    node *root3 = NULL;
+    Node *root  = NULL;
+    Node *root2 = NULL;
+    Node *root3 = NULL;
 
     printf("Adding:\n");
     display(root);
@@ -279,12 +250,12 @@ int main(void) {
     addNode(&root, 4);
     display(root);
 
-    printf("\nMerging nodes:\n");
+    printf("\nMerging Nodes:\n");
     mergeLists(&root, root2);
     display(root);
     display(root2);
 
-    printf("\nAppending node:\n");
+    printf("\nAppending Node:\n");
     display(root);
     display(root2);
     display(root3);
