@@ -62,6 +62,45 @@ int pop(int *data, Stack *stack) {
 }
 
 
+int peek(int *data, Stack *stack) {
+
+    if (!pop(data, stack)) {
+        return 0;
+    }
+    else {
+        push(*data, stack);
+        return 1;
+    }
+}
+
+
+int peekIndex(int *data, Stack *stack, int index) {
+    Stack temp_stack;
+    int temp_data;
+    int i = 0, found = 0;
+
+    init_stack(&temp_stack);
+
+    while (pop(&temp_data, stack)) {
+
+        if (i == index) {
+            found = 1;
+            *data = temp_data;
+            break;
+        }
+
+        push(temp_data, &temp_stack);
+        i++;
+    }
+
+    while (pop(&temp_data, &temp_stack)) {
+        push(temp_data, stack);
+    }
+
+    return found;
+}
+
+
 int main(void) {
 
     /* check if parenthesis are valid */

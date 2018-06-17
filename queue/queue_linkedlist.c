@@ -75,6 +75,59 @@ int dequeue(int *data, Queue *queue) {
 }
 
 
+int queuePeek(int *data, Queue *queue) {
+    Queue temp_queue;
+    int temp_data;
+
+    /* it is empty */
+    if (!dequeue(&temp_data, queue)) {
+        return 0;
+    }
+
+    /* not empty */
+    *data = temp_data;
+
+    init_queue(&temp_queue);
+    enqueue(temp_data, &temp_queue);
+
+    while (dequeue(&temp_data, queue)) {
+        enqueue(temp_data, &temp_queue);
+    }
+
+    while(dequeue(&temp_data, &temp_queue)) {
+        enqueue(temp_data, queue);
+    }
+
+    return 1;
+}
+
+
+int queuePeekIndex(int *data, Queue *queue, int index) {
+    Queue temp_queue;
+    int temp_data;
+    int i = 0, found = 0;
+
+    init_queue(&temp_queue);
+
+    while (dequeue(&temp_data, queue)) {
+        
+        if (i == index) {
+            found = 1;
+            *data = temp_data;
+        }
+
+        enqueue(temp_data, &temp_queue);
+        i++;
+    }
+
+    while (dequeue(&temp_data, &temp_queue)) {
+        enqueue(temp_data, queue);
+    }
+
+    return found;
+}
+
+
 int main(void) {
     Queue queue;
     int data;
@@ -87,6 +140,15 @@ int main(void) {
 
     enqueue(2, &queue);
     enqueue(3, &queue);
+    enqueue(4, &queue);
+
+    queuePeek(&data, &queue);
+    printf("Queue peek: %d\n", data);
+    queuePeekIndex(&data, &queue, 1);
+    printf("Queue peek at index 1: %d\n", data);
+
+    dequeue(&data, &queue);
+    printf("Empty: %d Data: %d\n", isEmpty(&queue), data);
     dequeue(&data, &queue);
     printf("Empty: %d Data: %d\n", isEmpty(&queue), data);
     dequeue(&data, &queue);
