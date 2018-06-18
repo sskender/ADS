@@ -120,6 +120,32 @@ BSTnode *searchBST(unsigned int data, BSTnode *root) {
 }
 
 
+int findLevel(unsigned int data, BSTnode *root) {
+    /**
+     * Find on which level is data,
+     * otherwise return -1
+     * 
+     * NOTE:
+     *  Count from 1, not 0
+     * */
+
+    int level = 1;
+
+    while (root != NULL && root->data != data) {
+        level++;
+
+        if (data < root->data) {
+            root = root->left;
+        }
+        else {
+            root = root->right;
+        }
+    }
+
+    return (root == NULL) ? -1 : level;
+}
+
+
 BSTnode *findMinimum(BSTnode *root) {
 
     while (root != NULL && root->left != NULL) {
@@ -225,6 +251,37 @@ int getNumberOfNodesPreorder(BSTnode *root) {
 }
 
 
+int getNumberOfNodesOnLevel(BSTnode *root, int level) {
+
+    if (root == NULL || level <= 0) {
+        return 0;
+    }
+    else if (level == 1) {
+        return 1;
+    }
+    else {
+        return getNumberOfNodesOnLevel(root->left, level-1) + getNumberOfNodesOnLevel(root->right, level-1);
+    }
+}
+
+
+int hasPathSum(BSTnode *root, int sum) {
+    /**
+     *  Return true if there is a path from root to leaf,
+     *  such that adding all the values equals the given sum.
+     * */
+    int sub_sum;
+
+    if (root == NULL) {
+        return sum == 0;
+    }
+
+    sub_sum = sum - root->data;
+
+    return (hasPathSum(root->left, sub_sum) || hasPathSum(root->right, sub_sum));
+}
+
+
 /* < tree travel > */
 
 void travelLevelOrder(BSTnode *root) {
@@ -306,6 +363,22 @@ void travelPostorder(BSTnode *root) {
     printf("%c\t", root->data);
 }
 
+
+void mirror(BSTnode *root) {
+    BSTnode *temp;
+
+    if (root == NULL) {
+        return;
+    }
+
+    mirror(root->left);
+    mirror(root->right);
+
+    temp        = root->left;
+    root->left  = root->right;
+    root->right = temp;
+}
+
 /* < / tree travel > */
 
 
@@ -374,7 +447,49 @@ int isBSTnotEfficientMethod(BSTnode* root) {
     return 1;
 }
 
+
+int isTheSameBST(BSTnode *root1, BSTnode *root2) {
+    /**
+     * Return true if two trees are structurally identical.
+     * */
+
+    /* both empty */
+    if (root1 == NULL && root2 == NULL) {
+        return 1;
+    }
+
+    /* both not empty */
+    else if (root1 != NULL && root2 != NULL) {
+        return root1->data == root2->data && isTheSameBST(root1->left, root2->left) && isTheSameBST(root1->right, root2->right);
+    }
+
+    /* one empty, other one not */
+    else {
+        return 0;
+    }
+}
+
 /* < / tree validity > */
+
+
+void doubleBST(BSTnode *root) {
+    /**
+     * For each node create a new duplicate node and
+     * insert it as the left child of the original node.
+     * */
+    BSTnode *old_root;
+
+    if (root == NULL) {
+        return;
+    }
+
+    doubleBST(root->left);
+    doubleBST(root->right);
+
+    old_root = root->left;
+    root->left = createBSTnode(root->data);
+    root->left->left = old_root;
+}
 
 
 BSTnode *deleteBSTnode(unsigned int data, BSTnode *root) {
@@ -419,6 +534,18 @@ BSTnode *deleteBSTnode(unsigned int data, BSTnode *root) {
     }
 
     return root;
+}
+
+
+void deleteBST(BSTnode *root) {
+
+    if (root == NULL) {
+        return;
+    }
+
+    deleteBST(root->left);
+    deleteBST(root->right);
+    free(root);
 }
 
 
