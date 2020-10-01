@@ -1,0 +1,344 @@
+#include<stdio.h>
+#define max 10
+void enqueue_front();
+void enqueue_rear();
+void dequeue_front();
+void dequeue_rear();
+void display();
+int deque[max] ;
+int front =-1 ;
+int rear =-1 ;
+int count=0 ;
+main()
+{
+int choice ;
+while(1)
+{
+    printf("\n1 :insert data by front \n");
+    printf("2 :insert data by reaar\n");
+    printf("3 :delete data by front\n");
+    printf("4 :delete data by rear\n");
+    printf("5 :display element of the dequeue\n");
+    printf("6:quit\n") ;
+    printf("enter your choice =");
+    scanf("%d",&choice);
+    switch (choice)
+    {
+    case 1 : enqueue_front();
+             break;
+    case 2 : enqueue_rear();
+             break;
+    case 3 : dequeue_front();
+             break ;
+    case 4 : dequeue_rear();
+             break ;
+    case 5 : display();
+             break ;
+    case 6 : exit(1) ;
+    
+    default: printf("enter valid choice\n");
+        
+    }
+}
+}
+void enqueue_front()
+{
+    if((front==0 && rear==max-1) ||(rear +1)==front )
+    {
+        printf("\n dequeue is full\n ") ;
+    }
+    else
+    {   
+        int data ;
+        printf("\n enter data =") ;
+        scanf("%d",&data);
+      if(front== -1 && rear == -1)
+      {
+          front =0 ;
+          rear =0 ;
+          deque[front] = data ;
+      }
+      else
+      {
+         if(front == 0)
+         {
+             front = max -1 ;
+             deque[front] = data ;
+         }
+         else
+         {
+             front-- ;
+            deque[front] = data ;
+         }
+      }
+    }
+}
+void enqueue_rear()
+{
+    if((front==0 && rear==max-1) ||(rear +1)==front )
+    {
+        printf("\n dequeue is full\n ") ;
+    }
+    else
+    {   
+        int data ;
+        printf("\n enter data =") ;
+        scanf("%d",&data);
+      if(front== -1 && rear == -1)
+      {
+          front=0 ;
+          rear =0 ;
+          deque[rear] = data ;
+      }
+      else
+      {
+         if(rear == max-1)
+         {
+              rear = 0 ;
+             deque[rear] = data ;
+         }
+         else
+         {
+             rear++;
+            deque[rear] = data ;
+         }
+      }
+    }
+}
+void dequeue_front()
+{
+    if(rear==-1 && front ==-1)
+    {
+        printf("\ndeque is empty\n");
+    }
+    else
+    {
+      if(front==rear)
+      {
+          printf("\ndeleted elenent = %d",deque[front]);
+          front=-1 ;
+          rear =-1 ;
+      }
+      else
+      {
+         if(front==max -1)
+         {
+             printf("\ndeleted elenent = %d",deque[front]);
+             front = 0 ;
+         }
+         else
+         {
+            printf("\ndeleted elenent = %d",deque[front]);
+            front++ ;
+         }
+      }
+    }
+}
+
+void dequeue_rear()
+{
+    if(rear==-1 && front ==-1)
+    {
+        printf("\ndeque is empty\n");
+    }
+    else
+    {
+      if(front==rear)
+      {
+          printf("\ndeleted elenent = %d",deque[rear]);
+          front=-1 ;
+          rear =-1 ;
+      }
+      else
+      {
+         if(rear==0)
+         {
+             printf("\ndeleted elenent = %d",deque[rear]);
+             rear = max- 1 ;
+         }
+         else
+         {
+            printf("\ndeleted elenent = %d",deque[rear]);
+            rear--;
+         }
+      }
+    }
+}
+void display()
+{
+   if(rear==-1 && front ==-1)
+    {
+        printf("\ndeque is empty\n");
+    }
+    else
+    { 
+        int i=0 ;
+        i = front ;
+        printf("\n data =") ;
+       while(i!=rear)
+       {
+           printf("  %d  ",deque[i]) ;
+           i = (i+1) % max ;
+       }
+       printf(" %d ",deque[rear]);
+       printf("\n");
+    }
+
+}
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =2
+
+ enter data =5
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ enter data =9
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =2
+
+ enter data =2
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =2
+
+ enter data =6
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =2
+
+ enter data =3
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ enter data =7
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ enter data =4
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ enter data =9
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =5
+
+ data =  9    4    7    9    5    2    6   3
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ enter data =10
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =2
+
+ enter data =11
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =1
+
+ dequeue is full
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =5
+
+ data =  10    9    4    7    9    5    2    6    3   11
+
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =3
+
+deleted elenent = 10
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =4
+
+deleted elenent = 11
+1 :insert data by front
+2 :insert data by reaar
+3 :delete data by front
+4 :delete data by rear
+5 :display element of the dequeue
+6:quit
+enter your choice =6
+PS C:\Users\us
